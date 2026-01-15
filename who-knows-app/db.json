@@ -1,0 +1,54 @@
+{
+  "users": {
+    "0x316502403e401d5d9bc653e6fdb365caff6f7d54": {
+      "address": "0x316502403e401d5d9bc653e6fdb365caff6f7d54",
+      "points": 0,
+      "referralCode": "1SYQ3Z",
+      "invites": [],
+      "transactions": 0,
+      "volume": 0,
+      "dailyVolume": 0,
+      "weeklyVolume": 0,
+      "lastTxTimestamp": 0,
+      "quests": {
+        "dailyTx": false,
+        "dailyVol1": false,
+        "dailyVol5": false,
+        "dailyVol10": false,
+        "dailyVol50": false,
+        "dailyVol100": false,
+        "weeklyVol1": false
+      },
+      "referralPoints": 0,
+      "referredBy": null,
+      "completedQuestsCount": 0,
+      "processedHashes": []
+    },
+    "0xb5b4b2607ddfa58666ec46355f748c3d8faa41e2": {
+      "address": "0xb5b4b2607ddfa58666ec46355f748c3d8faa41e2",
+      "points": 0,
+      "referralPoints": 0,
+      "referralCode": "Z60JHN",
+      "referredBy": null,
+      "completedQuestsCount": 0,
+      "invites": [],
+      "transactions": 0,
+      "volume": 0,
+      "dailyVolume": 0,
+      "weeklyVolume": 0,
+      "lastTxTimestamp": 0,
+      "processedHashes": [],
+      "quests": {
+        "dailyTx": false,
+        "dailyVol1": false,
+        "dailyVol5": false,
+        "dailyVol10": false,
+        "dailyVol50": false,
+        "dailyVol100": false,
+        "weeklyVol1": false
+      }
+    }
+  },
+  "referrals": {},
+  "antiSybil": {}
+}

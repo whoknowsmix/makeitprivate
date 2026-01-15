@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Who Knows? Deposit - Privacy Mixer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#0d0d0d",
+                        "charcoal": "#101922",
+                        "silver": "#c0c0c0",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .silver-glow {
+            box-shadow: 0 0 15px rgba(192, 192, 192, 0.2);
+        }
+        .chrome-bg {
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .metallic-border {
+            border: 1px solid rgba(192, 192, 192, 0.15);
+        }
+        .floating-asset {
+            position: absolute;
+            z-index: 0;
+            opacity: 0.15;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
+        }
+        .tooltip-container:hover .tooltip-text {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30 min-h-screen relative overflow-hidden">
+<div class="floating-asset top-[15%] left-[10%] scale-150">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1, 'wght' 200;">lock</span>
+</div>
+<div class="floating-asset bottom-[20%] right-[12%] scale-125 rotate-12">
+<span class="material-symbols-outlined text-[100px]" style="font-variation-settings: 'FILL' 1, 'wght' 200;">shield</span>
+</div>
+<div class="floating-asset top-[40%] right-[5%] scale-75 -rotate-12">
+<span class="material-symbols-outlined text-[80px]" style="font-variation-settings: 'FILL' 1, 'wght' 200;">fingerprint</span>
+</div>
+<div class="relative flex h-screen w-full z-10">
+<aside class="w-64 border-r border-white/5 bg-background-dark/80 backdrop-blur-xl flex flex-col justify-between py-8 px-6">
+<div class="flex flex-col gap-10">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-gradient-to-br from-silver to-gray-600 flex items-center justify-center metallic-border">
+<span class="material-symbols-outlined text-background-dark text-xl" style="font-variation-settings: 'wght' 700;">visibility_off</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-lg font-bold tracking-tight leading-none">Who Knows?</h1>
+<p class="text-white/40 text-[10px] uppercase tracking-[0.2em] font-medium">Privacy Mixer</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-4 px-4 py-3 bg-white/5 text-white rounded-lg border border-white/10 silver-glow transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-[22px] text-primary">south_west</span>
+<span class="text-sm font-medium tracking-wide">Deposit</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-white/50 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[22px]">north_east</span>
+<span class="text-sm font-medium tracking-wide">Withdraw</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-white/50 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[22px]">history</span>
+<span class="text-sm font-medium tracking-wide">History</span>
+</a>
+<div class="h-px bg-white/5 my-4 mx-4"></div>
+<a class="flex items-center gap-4 px-4 py-3 text-white/50 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[22px]">settings</span>
+<span class="text-sm font-medium tracking-wide">Settings</span>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-4">
+<div class="px-4 py-3 rounded-xl bg-primary/5 border border-primary/20 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-green-400 animate-pulse"></span>
+<span class="text-[10px] text-primary/80 uppercase font-bold tracking-widest">Network Live</span>
+</div>
+<span class="text-[10px] text-white/40">v2.0.4</span>
+</div>
+<a class="flex items-center gap-4 px-4 py-3 text-white/40 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[22px]">help</span>
+<span class="text-sm font-medium">Support Center</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 flex flex-col relative overflow-y-auto">
+<header class="w-full flex justify-end p-8 absolute top-0 left-0 z-20">
+<button class="flex items-center gap-2 px-6 py-2.5 rounded-full border border-silver/30 bg-white/5 hover:bg-white/10 text-white transition-all duration-300 silver-glow backdrop-blur-sm group">
+<span class="material-symbols-outlined text-lg text-silver group-hover:text-white transition-colors">account_balance_wallet</span>
+<span class="text-sm font-medium tracking-wider uppercase">Connect Wallet</span>
+</button>
+</header>
+<div class="flex-1 flex flex-col items-center justify-center px-6 max-w-4xl mx-auto w-full pt-24 pb-12">
+<div class="text-center mb-10">
+<h1 class="text-white tracking-tight text-[40px] font-bold leading-tight pb-2">Deposit Funds</h1>
+<p class="text-white/40 text-base max-w-md mx-auto">Enhance your privacy by mixing assets through a non-custodial zero-knowledge protocol.</p>
+</div>
+<div class="w-full glass-card rounded-2xl p-8 metallic-border shadow-2xl max-w-xl">
+<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-2">
+<label class="px-1 text-white/70 text-sm font-medium uppercase tracking-widest flex justify-between">
+<span>Token</span>
+<span class="text-white/30 text-[10px]">Select Asset</span>
+</label>
+<div class="relative group">
+<div class="w-full rounded-xl border border-white/10 bg-white/5 h-16 px-4 flex items-center justify-between cursor-pointer hover:bg-white/10 transition-all">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-white/10 flex items-center justify-center">
+<img alt="ETH" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIgGT-KWzNmzwBzaDbsx6Fn7jDvqm6jtaoyq4HdfUHKeVypKoy9gCI_33AnE8Fjq67TW93G9ZDYS_aS2sh6tFQDhYbX9Q7MtmNNfPj1Jb2gMlE8k9XLtEb2PqJM-LlAPO9T6x-2biR7QG5vDn5pxC9G95WqQemRTsN3AlhEGrt9ZMW5cFQTLWm8bp0GVobyW9sQsFrwjBoZTmdzc6WVogdiy-tHz_crkpwmg35_lo-eEDA1YhlSpM2tCve9Skr-Ph-tq2BgfGK7vo"/>
+</div>
+<span class="text-lg font-medium">ETH</span>
+</div>
+<span class="material-symbols-outlined text-white/30">expand_more</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="px-1 text-white/70 text-sm font-medium uppercase tracking-widest flex justify-between">
+<span>Amount</span>
+<span class="text-white/30 text-[10px]">Manual Entry</span>
+</label>
+<div class="relative group">
+<input class="form-input flex w-full rounded-xl text-white focus:outline-none focus:ring-1 focus:ring-primary/50 border border-white/10 bg-white/5 h-16 px-4 text-xl font-medium placeholder:text-white/20 transition-all" placeholder="0.0" step="0.1" type="number" value="1.0"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 font-bold tracking-tighter">ETH</div>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<span class="px-1 text-white/30 text-[10px] uppercase font-bold tracking-widest">Select Amount</span>
+<div class="grid grid-cols-4 gap-3">
+<button class="py-3 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all text-sm font-medium">0.1 ETH</button>
+<button class="py-3 rounded-lg border border-primary/50 bg-primary/10 text-white transition-all text-sm font-bold silver-glow">1 ETH</button>
+<button class="py-3 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all text-sm font-medium">10 ETH</button>
+<button class="py-3 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all text-sm font-medium">100 ETH</button>
+</div>
+</div>
+<div class="pt-4 relative">
+<div class="flex items-center gap-3">
+<button class="flex-1 flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-16 bg-gradient-to-r from-white/15 to-white/5 hover:from-white/25 hover:to-white/15 border border-white/30 text-white text-sm lg:text-base font-bold tracking-widest silver-glow transition-all active:scale-[0.98]">
+<span class="truncate uppercase px-4">Generate Secret Note &amp; Deposit</span>
+</button>
+<div class="tooltip-container relative flex items-center justify-center cursor-help">
+<span class="material-symbols-outlined text-white/40 hover:text-white transition-colors">info</span>
+<div class="tooltip-text absolute bottom-full mb-3 right-0 w-64 p-3 bg-charcoal border border-white/20 rounded-lg text-[11px] text-white/80 leading-relaxed opacity-0 invisible translate-y-2 transition-all duration-200 z-50 shadow-2xl backdrop-blur-md">
+                                        The secret note is an offline cryptographic proof of your deposit. You must save this note securely; it is the only way to withdraw your funds later.
+                                        <div class="absolute top-full right-4 border-8 border-transparent border-t-charcoal"></div>
+</div>
+</div>
+</div>
+<p class="text-center text-[10px] text-white/40 mt-4 uppercase tracking-tighter leading-relaxed">
+                                YOUR PRIVACY NOTE WILL BE GENERATED AFTER CONFIRMING THE TRANSACTION.<br/>
+<span class="italic text-white/20">Keep your note secure; it is required for withdrawal.</span>
+</p>
+</div>
+</div>
+</div>
+</div>
+<footer class="w-full border-t border-white/5 py-6 px-12 bg-background-dark/50 backdrop-blur-md mt-auto">
+<div class="max-w-6xl mx-auto flex justify-between items-center">
+<div class="flex gap-12">
+<div class="flex flex-col">
+<span class="text-white/30 text-[10px] uppercase tracking-widest font-bold">Total Value Locked</span>
+<span class="text-white/80 text-sm font-medium">$4,281,902.14</span>
+</div>
+<div class="flex flex-col border-l border-white/5 pl-12">
+<span class="text-white/30 text-[10px] uppercase tracking-widest font-bold">Anonymity Set</span>
+<span class="text-white/80 text-sm font-medium">1,240 Participants</span>
+</div>
+<div class="flex flex-col border-l border-white/5 pl-12">
+<span class="text-white/30 text-[10px] uppercase tracking-widest font-bold">24h Mix Volume</span>
+<span class="text-white/80 text-sm font-medium">842.5 ETH</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<img alt="Network" class="w-4 h-4 opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIgGT-KWzNmzwBzaDbsx6Fn7jDvqm6jtaoyq4HdfUHKeVypKoy9gCI_33AnE8Fjq67TW93G9ZDYS_aS2sh6tFQDhYbX9Q7MtmNNfPj1Jb2gMlE8k9XLtEb2PqJM-LlAPO9T6x-2biR7QG5vDn5pxC9G95WqQemRTsN3AlhEGrt9ZMW5cFQTLWm8bp0GVobyW9sQsFrwjBoZTmdzc6WVogdiy-tHz_crkpwmg35_lo-eEDA1YhlSpM2tCve9Skr-Ph-tq2BgfGK7vo"/>
+<span class="text-white/40 text-xs">Ethereum Mainnet</span>
+</div>
+<span class="text-white/20 text-[10px] uppercase tracking-tighter">Powered by ZK-SNARKs</span>
+</div>
+</div>
+</footer>
+</main>
+</div>
+
+</body></html>
