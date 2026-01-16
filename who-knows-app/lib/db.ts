@@ -36,7 +36,11 @@ export function readDB(): DBSchema {
 }
 
 export function writeDB(data: DBSchema) {
-    fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
+    try {
+        fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
+    } catch (error) {
+        console.error("Failed to write to DB (likely read-only fs):", error);
+    }
 }
 
 export type QuestData = {

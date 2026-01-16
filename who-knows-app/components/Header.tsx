@@ -1,9 +1,17 @@
 'use client';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
-export function Header() {
+export function Header({ onOpenMenu }: { onOpenMenu: () => void }) {
     return (
-        <header className="w-full flex justify-end p-8 absolute top-0 left-0 z-20 pointer-events-none">
+        <header className="w-full flex justify-between md:justify-end items-center p-6 md:p-8 absolute top-0 left-0 z-20 pointer-events-none">
+            {/* Mobile Hamburger */}
+            <button
+                onClick={onOpenMenu}
+                className="md:hidden pointer-events-auto p-2 bg-white/5 rounded-lg border border-white/10 text-white"
+            >
+                <span className="material-symbols-outlined">menu</span>
+            </button>
+
             <div className="pointer-events-auto">
                 <ConnectButton.Custom>
                     {({

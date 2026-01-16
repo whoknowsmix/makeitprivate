@@ -35,10 +35,48 @@
     filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
   }
   
-  .tooltip-container:hover .tooltip-text {
+    .tooltip-container:hover .tooltip-text {
         opacity: 1;
         visibility: visible;
         transform: translateY(0);
+    }
+
+    /* Mobile Optimizations for Floating Assets */
+    @media (max-width: 768px) {
+        .floating-asset {
+            /* Move assets to background corners or top/bottom to clear inputs */
+            opacity: 0.1; /* Lower opacity on mobile */
+            z-index: 0;
+            transition: all 0.5s ease-out;
+        }
+
+        /* Top Lock */
+        .floating-asset:nth-child(1) {
+             top: 5% !important;
+             left: -10% !important;
+             transform: scale(0.8) !important;
+        }
+
+        /* Bottom Shield */
+        .floating-asset:nth-child(2) {
+             bottom: 5% !important;
+             right: -10% !important;
+             transform: scale(0.8) rotate(12deg) !important;
+        }
+
+        /* Middle Fingerprint - Hide or move way out of the way */
+        .floating-asset:nth-child(3) {
+             top: 10% !important;
+             right: 5% !important;
+             transform: scale(0.5) rotate(-12deg) !important;
+        }
+    }
+
+    /* 3D Interaction Classes */
+    .touch-rotate-3d {
+        transition: transform 0.1s ease-out;
+        transform-style: preserve-3d;
+        perspective: 1000px;
     }
 }
 

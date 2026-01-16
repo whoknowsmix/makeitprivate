@@ -5,6 +5,8 @@ import { Providers } from './providers';
 import { Sidebar } from '@/components/Sidebar';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { AppLayout } from '@/components/AppLayout';
+import { FloatingBackground } from '@/components/FloatingBackground';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -30,23 +32,12 @@ export default function RootLayout({
       <body className={`${spaceGrotesk.variable} antialiased bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30 min-h-screen relative overflow-hidden`}>
         <Providers>
           {/* Background Assets */}
-          <div className="floating-asset top-[15%] left-[10%] scale-150 pointer-events-none fixed">
-            <span className="material-symbols-outlined text-[120px]" style={{ fontVariationSettings: "'FILL' 1, 'wght' 200" }}>lock</span>
-          </div>
-          <div className="floating-asset bottom-[20%] right-[12%] scale-125 rotate-12 pointer-events-none fixed">
-            <span className="material-symbols-outlined text-[100px]" style={{ fontVariationSettings: "'FILL' 1, 'wght' 200" }}>shield</span>
-          </div>
-          <div className="floating-asset top-[40%] right-[5%] scale-75 -rotate-12 pointer-events-none fixed">
-            <span className="material-symbols-outlined text-[80px]" style={{ fontVariationSettings: "'FILL' 1, 'wght' 200" }}>fingerprint</span>
-          </div>
+          <FloatingBackground />
 
-          <div className="relative flex h-screen w-full z-10">
-            <Sidebar />
-            <main className="flex-1 flex flex-col relative overflow-y-auto">
-              <Header />
+          <div className="relative h-screen w-full overflow-hidden">
+            <AppLayout>
               {children}
-              <Footer />
-            </main>
+            </AppLayout>
           </div>
         </Providers>
       </body>

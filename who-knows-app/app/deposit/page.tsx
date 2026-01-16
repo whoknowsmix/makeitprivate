@@ -21,6 +21,7 @@ function DepositPageContent() {
 
     const handleStartDeposit = () => {
         if (!isConnected || parseFloat(amount) < parseFloat(MIN_DEPOSIT)) return;
+        if (navigator.vibrate) navigator.vibrate(10);
         const note = generateSecret();
         setSecretNote(note);
         setShowNoteModal(true);
@@ -29,6 +30,7 @@ function DepositPageContent() {
 
     const handleConfirmDeposit = async () => {
         if (!secretNote) return;
+        if (navigator.vibrate) navigator.vibrate(10);
         const hash = hashSecret(secretNote);
         try {
             await deposit(amount, hash, referralCode || undefined);
@@ -38,31 +40,39 @@ function DepositPageContent() {
         }
     };
 
+    const copyToClipboard = () => {
+        if (secretNote) {
+            navigator.clipboard.writeText(secretNote);
+            if (navigator.vibrate) navigator.vibrate(10);
+            // Could add toast here
+        }
+    };
+
     const feeAmount = (parseFloat(amount || '0') * 0.05).toFixed(4);
     const receiveAmount = (parseFloat(amount || '0') * 0.95).toFixed(4);
 
     if (isSuccess) {
         return (
-            <div className="flex-1 flex flex-col items-center justify-center px-6">
-                <div className="w-full max-w-xl text-center glass-card p-12 rounded-2xl border border-green-500/30">
-                    <span className="material-symbols-outlined text-green-500 text-6xl mb-4">check_circle</span>
-                    <h2 className="text-3xl font-bold mb-2">Deposit Successful</h2>
+            <div className="flex-1 flex flex-col items-center justify-center px-4 md:px-6">
+                <div className="w-full max-w-xl text-center glass-card p-8 md:p-12 rounded-2xl border border-green-500/30">
+                    <span className="material-symbols-outlined text-green-500 text-5xl md:text-6xl mb-4">check_circle</span>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-2">Deposit Successful</h2>
                     <p className="text-white/60 mb-2">Your {amount} ETH has been mixed.</p>
                     <p className="text-white/40 text-sm mb-8">Keep your secret note safe!</p>
-                    <button onClick={reset} className="px-8 py-3 bg-primary rounded-lg font-bold">Make Another Deposit</button>
+                    <button onClick={reset} className="px-8 py-3 bg-primary rounded-lg font-bold w-full md:w-auto">Make Another Deposit</button>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="flex-1 flex flex-col items-center justify-center px-6 max-w-4xl mx-auto w-full pt-24 pb-12">
-            <div className="text-center mb-10">
-                <h1 className="text-white tracking-tight text-[40px] font-bold leading-tight pb-2">Deposit Funds</h1>
-                <p className="text-white/40 text-base max-w-md mx-auto">Choose a preset or enter a custom amount. Minimum deposit is {MIN_DEPOSIT} ETH.</p>
+        <div className="flex-1 flex flex-col items-center justify-center px-4 md:px-6 max-w-4xl mx-auto w-full pt-20 pb-12 overflow-y-auto">
+            <div className="text-center mb-8 md:mb-10 mt-4 md:mt-0">
+                <h1 className="text-white tracking-tight text-3xl md:text-[40px] font-bold leading-tight pb-2">Deposit Funds</h1>
+                <p className="text-white/40 text-sm md:text-base max-w-md mx-auto">Choose a preset or enter a custom amount. Minimum deposit is {MIN_DEPOSIT} ETH.</p>
             </div>
 
-            <div className="w-full glass-card rounded-2xl p-8 metallic-border shadow-2xl max-w-xl relative overflow-hidden">
+            <div className="w-full glass-card rounded-2xl p-6 md:p-8 metallic-border shadow-2xl max-w-xl relative overflow-hidden">
                 {isPending && (
                     <div className="absolute inset-0 bg-black/60 z-10 flex flex-col items-center justify-center backdrop-blur-sm">
                         <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
@@ -80,10 +90,13 @@ function DepositPageContent() {
                             {PRESETS.map((preset) => (
                                 <button
                                     key={preset.amount}
-                                    onClick={() => setAmount(preset.amount)}
-                                    className={`py-3 rounded-lg border transition-all text-sm font-medium ${amount === preset.amount
-                                        ? 'border-primary/50 bg-primary/10 text-white silver-glow font-bold'
-                                        : 'border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20'}`}
+                                    onClick={() => {
+                                        setAmount(preset.amount);
+                                        if (navigator.vibrate) navigator.vibrate(5);
+                                    }}
+                                    className={`py-3 rounded-lg border transition-all text-sm font-medium touch-manipulation ${amount === preset.amount
+                                        ? 'border-primary/50 bg-primary/10 text-white silver-glow font-bold scale-[1.02]'
+                                        : 'border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 active:scale-95'}`}
                                 >
                                     {preset.label}
                                 </button>
@@ -113,23 +126,33 @@ function DepositPageContent() {
                         )}
                     </div>
 
-                    <div className="bg-black/20 rounded-xl p-4 border border-white/5 space-y-2">
-                        <div className="flex justify-between text-sm">
-                            <span className="text-white/40">Deposit Amount</span>
-                            <span className="text-white font-medium">{amount || '0'} ETH</span>
+                    <div className="bg-black/20 rounded-xl border border-white/5 relative overflow-hidden">
+                        <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/5">
+                            <span className="text-[10px] text-white/30 uppercase tracking-widest font-medium">Breakdown</span>
+                            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-red-500/10 border border-red-500/20">
+                                <span className="material-symbols-outlined text-[10px] text-red-400">info</span>
+                                <span className="text-[10px] text-red-400 font-bold uppercase tracking-wider">5% Fee Applied</span>
+                            </div>
                         </div>
-                        <div className="flex justify-between text-sm">
-                            <span className="text-white/40">Protocol Fee (5%)</span>
-                            <span className="text-red-400 font-medium">-{feeAmount} ETH</span>
-                        </div>
-                        <div className="h-px bg-white/10 my-1"></div>
-                        <div className="flex justify-between text-base">
-                            <span className="text-white/70 font-bold">You Receive</span>
-                            <span className="text-green-400 font-bold">{receiveAmount} ETH</span>
+
+                        <div className="p-4 space-y-3">
+                            <div className="flex justify-between text-sm">
+                                <span className="text-white/40">Deposit Amount</span>
+                                <span className="text-white font-medium">{amount || '0'} ETH</span>
+                            </div>
+                            <div className="flex justify-between text-sm">
+                                <span className="text-white/40">Protocol Fee (5%)</span>
+                                <span className="text-red-400 font-medium">-{feeAmount} ETH</span>
+                            </div>
+                            <div className="h-px bg-white/10 my-1"></div>
+                            <div className="flex justify-between text-base">
+                                <span className="text-white/70 font-bold">You Receive</span>
+                                <span className="text-green-400 font-bold">{receiveAmount} ETH</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="pt-4 relative">
+                    <div className="pt-2 relative">
                         {!isConnected ? (
                             <div className="w-full flex justify-center">
                                 <ConnectButton />
@@ -138,7 +161,7 @@ function DepositPageContent() {
                             <button
                                 onClick={handleStartDeposit}
                                 disabled={parseFloat(amount) < parseFloat(MIN_DEPOSIT) || amount === ''}
-                                className="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-16 bg-gradient-to-r from-white/15 to-white/5 hover:from-white/25 hover:to-white/15 border border-white/30 text-white text-base font-bold tracking-widest silver-glow transition-all active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed"
+                                className="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-16 bg-gradient-to-r from-white/15 to-white/5 hover:from-white/25 hover:to-white/15 border border-white/30 text-white text-base font-bold tracking-widest silver-glow transition-all active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
                             >
                                 <span className="truncate uppercase px-4">Mix {amount || '0'} ETH</span>
                             </button>
@@ -154,11 +177,20 @@ function DepositPageContent() {
 
             <Modal isOpen={showNoteModal} onClose={() => setShowNoteModal(false)} title="Your Secret Note">
                 <div className="flex flex-col gap-4">
-                    <div className="p-4 bg-black/40 rounded-lg border border-red-500/20 text-center">
+                    <div className="p-4 bg-black/40 rounded-lg border border-red-500/20 text-center relative group">
                         <p className="text-red-400 text-xs font-bold uppercase tracking-widest mb-2">CRITICAL: Save This Note Offline</p>
-                        <p className="font-mono text-sm break-all text-white/80 select-all p-2 bg-white/5 rounded border border-white/10">
-                            {secretNote}
-                        </p>
+                        <div className="relative">
+                            <p className="font-mono text-sm break-all text-white/80 select-all p-3 md:p-4 bg-white/5 rounded border border-white/10 mb-2">
+                                {secretNote}
+                            </p>
+                            <button
+                                onClick={copyToClipboard}
+                                className="absolute right-2 top-2 p-1.5 rounded-md bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-colors"
+                                title="Copy to clipboard"
+                            >
+                                <span className="material-symbols-outlined text-sm">content_copy</span>
+                            </button>
+                        </div>
                     </div>
                     <div className="p-3 bg-primary/5 rounded-lg border border-primary/20">
                         <div className="flex justify-between items-center text-xs">
@@ -173,12 +205,15 @@ function DepositPageContent() {
                     <p className="text-[10px] text-white/30 leading-relaxed">
                         This note is the ONLY way to withdraw your funds. It acts as both your proof of deposit and your spending key. We do not store this note.
                     </p>
-                    <label className="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/5 rounded transition-colors group">
+                    <label className="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/5 rounded transition-colors group touch-manipulation">
                         <div className="relative flex items-center justify-center">
                             <input
                                 type="checkbox"
                                 checked={hasBackedUp}
-                                onChange={(e) => setHasBackedUp(e.target.checked)}
+                                onChange={(e) => {
+                                    setHasBackedUp(e.target.checked);
+                                    if (navigator.vibrate) navigator.vibrate(5);
+                                }}
                                 className="appearance-none w-5 h-5 rounded border border-white/20 bg-white/5 checked:bg-primary checked:border-primary transition-all cursor-pointer"
                             />
                             {hasBackedUp && <span className="material-symbols-outlined absolute text-[16px] text-white pointer-events-none">check</span>}
@@ -188,7 +223,7 @@ function DepositPageContent() {
                     <button
                         disabled={!hasBackedUp}
                         onClick={handleConfirmDeposit}
-                        className="w-full py-4 rounded-xl bg-primary text-white font-bold disabled:opacity-50 disabled:cursor-not-allowed silver-glow transition-all active:scale-[0.98] uppercase tracking-widest text-sm"
+                        className="w-full py-4 rounded-xl bg-primary text-white font-bold disabled:opacity-50 disabled:cursor-not-allowed silver-glow transition-all active:scale-[0.98] uppercase tracking-widest text-sm touch-manipulation"
                     >
                         Initiate Privacy Mix
                     </button>
@@ -209,4 +244,3 @@ export default function DepositPage() {
         </Suspense>
     );
 }
-

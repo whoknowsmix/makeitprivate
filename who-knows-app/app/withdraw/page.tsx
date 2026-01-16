@@ -107,8 +107,11 @@ export default function WithdrawPage() {
                         ) : (
                             <button
                                 disabled={!secret || !recipient}
-                                onClick={handleWithdraw}
-                                className="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 bg-gradient-to-r from-primary to-primary/80 border border-white/20 text-white text-base font-bold tracking-widest silver-glow transition-all active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed"
+                                onClick={() => {
+                                    handleWithdraw();
+                                    if (navigator.vibrate) navigator.vibrate(10);
+                                }}
+                                className="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 bg-gradient-to-r from-primary to-primary/80 border border-white/20 text-white text-base font-bold tracking-widest silver-glow transition-all active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
                             >
                                 <span className="truncate uppercase px-4">Claim Mixed Funds</span>
                             </button>
