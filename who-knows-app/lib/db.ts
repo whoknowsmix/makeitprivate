@@ -159,6 +159,10 @@ export function getOrCreateUser(address: string): UserData {
         }
         if (user.processedHashes === undefined) user.processedHashes = [];
         if (user.invites === undefined) user.invites = [];
+        // Fix: Ensure existing users have a referral code
+        if (!user.referralCode) {
+            user.referralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
         db.users[normalizedAddress] = user;
         writeDB(db);
     }
