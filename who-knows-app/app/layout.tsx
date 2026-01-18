@@ -1,12 +1,8 @@
 import type { Metadata } from 'next';
 import { Space_Grotesk } from 'next/font/google';
 import './globals.css';
-import nextDynamic from 'next/dynamic';
-import { Providers } from './providers';
-import { Sidebar } from '@/components/Sidebar';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import { AppLayout } from '@/components/AppLayout';
+import { Providers } from './providers';
 
 import { FloatingBackgroundWrapper } from '@/components/FloatingBackgroundWrapper';
 
@@ -20,8 +16,6 @@ export const metadata: Metadata = {
   title: 'Who Knows? - Privacy Mixer',
   description: 'Web3 Privacy App',
 };
-
-export const dynamic = 'force-dynamic';
 
 export default function RootLayout({
   children,

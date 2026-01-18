@@ -70,7 +70,7 @@ function EthereumConnectButton() {
                                 <div style={{ display: 'flex', gap: 12 }}>
                                     <button
                                         onClick={openChainModal}
-                                        className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-white"
+                                        className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-white"
                                         type="button"
                                     >
                                         {chain.hasIcon && (
@@ -89,6 +89,7 @@ function EthereumConnectButton() {
                                                         alt={chain.name ?? 'Chain icon'}
                                                         src={chain.iconUrl}
                                                         style={{ width: 12, height: 12 }}
+                                                        className="rounded-full"
                                                     />
                                                 )}
                                             </div>

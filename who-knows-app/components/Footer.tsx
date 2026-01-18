@@ -10,8 +10,10 @@ export function Footer() {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setMounted(true);
-    }, []);
+        if (!mounted) {
+            setMounted(true);
+        }
+    }, [mounted]); // eslint-disable-line react-hooks/exhaustive-deps
 
     if (!mounted) {
         return (

@@ -158,7 +158,7 @@ export const useDeposit = () => {
     const [activeReferralCode, setActiveReferralCode] = useState<string | null>(null);
 
     useEffect(() => {
-        if (isConfirmed && hash && hash !== lastProcessedHash && address && pendingAmount) {
+        if (isConfirmed && hash && hash !== lastProcessedHash && address && pendingAmount && !isSuccess) {
             setIsSuccess(true);
             setLastProcessedHash(hash);
 
@@ -206,7 +206,7 @@ export const useDeposit = () => {
                 })
             }).catch(console.error);
         }
-    }, [isConfirmed, hash, address, pendingAmount, lastProcessedHash, activeReferralCode]);
+    }, [isConfirmed, hash, address, pendingAmount, lastProcessedHash, activeReferralCode, isSuccess]);
 
     const deposit = async (amount: string, commitment: string, referralCode?: string) => {
         if (!isConnected) throw new Error('Wallet not connected');
@@ -242,7 +242,7 @@ export const useWithdraw = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (isConfirmed) {
+        if (isConfirmed && !isSuccess) {
             setIsSuccess(true);
             const historyItem = {
                 type: 'Withdraw',
@@ -253,13 +253,13 @@ export const useWithdraw = () => {
             const existing = JSON.parse(localStorage.getItem('who-knows-history') || '[]');
             localStorage.setItem('who-knows-history', JSON.stringify([historyItem, ...existing]));
         }
-    }, [isConfirmed, hash]);
+    }, [isConfirmed, hash, isSuccess]);
 
     useEffect(() => {
-        if (writeError) {
+        if (writeError && writeError.message !== error) {
             setError(writeError.message);
         }
-    }, [writeError]);
+    }, [writeError, error]);
 
     const withdraw = async (secret: string, recipient: string) => {
         if (!isConnected) throw new Error('Wallet not connected');

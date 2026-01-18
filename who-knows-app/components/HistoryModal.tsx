@@ -26,7 +26,7 @@ export function HistoryModal({ isOpen, onClose }: HistoryModalProps) {
             const stored = JSON.parse(localStorage.getItem('who-knows-history') || '[]');
             setHistory(stored);
         }
-    }, [isOpen]);
+    }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const clearHistory = () => {
         localStorage.removeItem('who-knows-history');

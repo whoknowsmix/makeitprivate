@@ -5,10 +5,8 @@ import {
     getOrCreateUser,
     UserData,
     createReferral,
-    getReferralByInvited,
     checkAntiSybil,
-    recordAntiSybilData,
-    DBSchema
+    recordAntiSybilData
 } from '@/lib/db';
 
 export async function GET(req: NextRequest) {

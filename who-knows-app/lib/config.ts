@@ -18,6 +18,6 @@ if (projectId === 'YOUR_PROJECT_ID') {
 export const config = getDefaultConfig({
   appName: 'Who Knows?',
   projectId,
-  chains: chains as any,
+  chains: chains as unknown as any,
   ssr: true,
 });

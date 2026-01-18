@@ -66,6 +66,8 @@ export default function RewardsPage() {
         } else {
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isConnected, address]);
 
     const handleCopyReferral = () => {
