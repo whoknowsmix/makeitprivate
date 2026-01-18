@@ -9,9 +9,11 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useSearchParams } from 'next/navigation';
 
 function DepositPageContent() {
+    // Ethereum hooks
     const { isConnected } = useAccount();
-    const { deposit, isPending, isSuccess, reset } = useDeposit();
-    const [amount, setAmount] = useState('1'); // Default 1 ETH
+    const { deposit: ethDeposit, isPending, isSuccess, reset, hash: ethHash, error } = useDeposit();
+
+    const [amount, setAmount] = useState('1');
     const [secretNote, setSecretNote] = useState<string | null>(null);
     const [showNoteModal, setShowNoteModal] = useState(false);
     const [hasBackedUp, setHasBackedUp] = useState(false);
@@ -31,9 +33,10 @@ function DepositPageContent() {
     const handleConfirmDeposit = async () => {
         if (!secretNote) return;
         if (navigator.vibrate) navigator.vibrate(10);
-        const hash = hashSecret(secretNote);
+
         try {
-            await deposit(amount, hash, referralCode || undefined);
+            const hash = hashSecret(secretNote);
+            await ethDeposit(amount, hash, referralCode || undefined);
             setShowNoteModal(false);
         } catch (e) {
             console.error(e);
@@ -44,12 +47,11 @@ function DepositPageContent() {
         if (secretNote) {
             navigator.clipboard.writeText(secretNote);
             if (navigator.vibrate) navigator.vibrate(10);
-            // Could add toast here
         }
     };
 
-    const feeAmount = (parseFloat(amount || '0') * 0.05).toFixed(4);
-    const receiveAmount = (parseFloat(amount || '0') * 0.95).toFixed(4);
+    const feeAmount = (parseFloat(amount || '0') * 0.005).toFixed(4);
+    const receiveAmount = (parseFloat(amount || '0') * 0.995).toFixed(4);
 
     if (isSuccess) {
         return (
@@ -58,7 +60,17 @@ function DepositPageContent() {
                     <span className="material-symbols-outlined text-green-500 text-5xl md:text-6xl mb-4">check_circle</span>
                     <h2 className="text-2xl md:text-3xl font-bold mb-2">Deposit Successful</h2>
                     <p className="text-white/60 mb-2">Your {amount} ETH has been mixed.</p>
-                    <p className="text-white/40 text-sm mb-8">Keep your secret note safe!</p>
+                    <p className="text-white/40 text-sm mb-4">Keep your secret note safe!</p>
+                    {ethHash && (
+                        <a
+                            href={`https://sepolia.etherscan.io/tx/${ethHash}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-blue-400 hover:text-blue-300 break-all mb-6 block"
+                        >
+                            View on Explorer →
+                        </a>
+                    )}
                     <button onClick={reset} className="px-8 py-3 bg-primary rounded-lg font-bold w-full md:w-auto">Make Another Deposit</button>
                 </div>
             </div>
@@ -68,8 +80,13 @@ function DepositPageContent() {
     return (
         <div className="flex-1 flex flex-col items-center justify-center px-4 md:px-6 max-w-4xl mx-auto w-full pt-20 pb-12 overflow-y-auto">
             <div className="text-center mb-8 md:mb-10 mt-4 md:mt-0">
-                <h1 className="text-white tracking-tight text-3xl md:text-[40px] font-bold leading-tight pb-2">Deposit Funds</h1>
-                <p className="text-white/40 text-sm md:text-base max-w-md mx-auto">Choose a preset or enter a custom amount. Minimum deposit is {MIN_DEPOSIT} ETH.</p>
+                <h1 className="text-white tracking-tight text-3xl md:text-[40px] font-bold leading-tight pb-2">
+                    Deposit Funds
+                    <span className="ml-2 text-lg text-primary">⟠</span>
+                </h1>
+                <p className="text-white/40 text-sm md:text-base max-w-md mx-auto">
+                    Choose a preset or enter a custom amount. Minimum deposit is {MIN_DEPOSIT} ETH.
+                </p>
             </div>
 
             <div className="w-full glass-card rounded-2xl p-6 md:p-8 metallic-border shadow-2xl max-w-xl relative overflow-hidden">
@@ -77,6 +94,13 @@ function DepositPageContent() {
                     <div className="absolute inset-0 bg-black/60 z-10 flex flex-col items-center justify-center backdrop-blur-sm">
                         <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
                         <p className="font-bold tracking-widest uppercase text-sm">Processing Deposit...</p>
+                    </div>
+                )}
+
+                {error && (
+                    <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg flex items-start gap-2">
+                        <span className="material-symbols-outlined text-red-500 text-sm mt-0.5">error</span>
+                        <p className="text-red-400 text-xs font-medium">{error}</p>
                     </div>
                 )}
 
@@ -131,7 +155,7 @@ function DepositPageContent() {
                             <span className="text-[10px] text-white/30 uppercase tracking-widest font-medium">Breakdown</span>
                             <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-red-500/10 border border-red-500/20">
                                 <span className="material-symbols-outlined text-[10px] text-red-400">info</span>
-                                <span className="text-[10px] text-red-400 font-bold uppercase tracking-wider">5% Fee Applied</span>
+                                <span className="text-[10px] text-red-400 font-bold uppercase tracking-wider">0.5% Fee Applied</span>
                             </div>
                         </div>
 
@@ -141,7 +165,7 @@ function DepositPageContent() {
                                 <span className="text-white font-medium">{amount || '0'} ETH</span>
                             </div>
                             <div className="flex justify-between text-sm">
-                                <span className="text-white/40">Protocol Fee (5%)</span>
+                                <span className="text-white/40">Protocol Fee (0.5%)</span>
                                 <span className="text-red-400 font-medium">-{feeAmount} ETH</span>
                             </div>
                             <div className="h-px bg-white/10 my-1"></div>
@@ -163,7 +187,9 @@ function DepositPageContent() {
                                 disabled={parseFloat(amount) < parseFloat(MIN_DEPOSIT) || amount === ''}
                                 className="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-16 bg-gradient-to-r from-white/15 to-white/5 hover:from-white/25 hover:to-white/15 border border-white/30 text-white text-base font-bold tracking-widest silver-glow transition-all active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
                             >
-                                <span className="truncate uppercase px-4">Mix {amount || '0'} ETH</span>
+                                <span className="truncate uppercase px-4">
+                                    Mix {amount || '0'} ETH
+                                </span>
                             </button>
                         )}
 

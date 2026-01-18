@@ -6,18 +6,26 @@ import { useWithdraw } from '@/hooks/useSmartContract';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function WithdrawPage() {
+    // Ethereum hooks
     const { isConnected } = useAccount();
-    const { withdraw, isPending, isSuccess, error, reset, hash } = useWithdraw();
+    const { withdraw: ethWithdraw, isPending, isSuccess, error, reset, hash } = useWithdraw();
+
     const [secret, setSecret] = useState('');
     const [recipient, setRecipient] = useState('');
 
     const handleWithdraw = async () => {
         if (!secret || !recipient) return;
         try {
-            await withdraw(secret, recipient);
+            await ethWithdraw(secret, recipient);
         } catch (e) {
             console.error(e);
         }
+    };
+
+    // Get appropriate explorer URL
+    const getExplorerUrl = () => {
+        if (!hash) return '';
+        return `https://sepolia.etherscan.io/tx/${hash}`;
     };
 
     if (isSuccess) {
@@ -29,7 +37,7 @@ export default function WithdrawPage() {
                     <p className="text-white/60 mb-2">Funds are being sent to recipient address.</p>
                     {hash && (
                         <a
-                            href={`https://sepolia.etherscan.io/tx/${hash}`}
+                            href={getExplorerUrl()}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-xs text-blue-400 hover:text-blue-300 break-all mb-6 block"
@@ -46,8 +54,13 @@ export default function WithdrawPage() {
     return (
         <div className="flex-1 flex flex-col items-center justify-center px-6 max-w-4xl mx-auto w-full pt-24 pb-12">
             <div className="text-center mb-10">
-                <h1 className="text-white tracking-tight text-[40px] font-bold leading-tight pb-2">Withdraw Funds</h1>
-                <p className="text-white/40 text-base max-w-md mx-auto">Provide your secret note to claim your mixed tokens. 5% protocol fee is deducted automatically.</p>
+                <h1 className="text-white tracking-tight text-[40px] font-bold leading-tight pb-2">
+                    Withdraw Funds
+                    <span className="ml-2 text-lg text-primary">⟠</span>
+                </h1>
+                <p className="text-white/40 text-base max-w-md mx-auto">
+                    Provide your secret note to claim your mixed tokens. 0.5% protocol fee is deducted automatically.
+                </p>
             </div>
 
             <div className="w-full glass-card rounded-2xl p-8 metallic-border shadow-2xl max-w-xl relative overflow-hidden">
@@ -61,7 +74,7 @@ export default function WithdrawPage() {
                 <div className="flex flex-col gap-6">
                     {error && (
                         <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm text-center">
-                            {error.includes('AlreadyWithdrawn') ? 'This note has already been used.' : 'Invalid secret note or recipient address.'}
+                            Invalid secret note or recipient address.
                         </div>
                     )}
 
@@ -94,7 +107,7 @@ export default function WithdrawPage() {
                         <div className="flex items-start gap-3">
                             <span className="material-symbols-outlined text-[20px] text-white/40">info</span>
                             <p className="text-[11px] text-white/40 leading-relaxed">
-                                The contract will automatically calculate the original deposit amount and deduct the 5% protocol fee before transferring the remainder to the recipient.
+                                The contract will automatically calculate the original deposit amount and deduct the 0.5% protocol fee before transferring the remainder to the recipient.
                             </p>
                         </div>
                     </div>
@@ -113,7 +126,7 @@ export default function WithdrawPage() {
                                 }}
                                 className="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 bg-gradient-to-r from-primary to-primary/80 border border-white/20 text-white text-base font-bold tracking-widest silver-glow transition-all active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
                             >
-                                <span className="truncate uppercase px-4">Claim Mixed Funds</span>
+                                <span className="truncate uppercase px-4">Claim Mixed ETH</span>
                             </button>
                         )}
                     </div>

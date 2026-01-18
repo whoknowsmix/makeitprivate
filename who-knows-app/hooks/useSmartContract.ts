@@ -12,6 +12,7 @@ export const PRESETS = [
     { amount: '10', label: '10 ETH' },
 ] as const;
 
+export const FEE_PERCENT = 0.005; // 0.5%
 export const MIN_DEPOSIT = '0.01';
 
 // Contract ABI

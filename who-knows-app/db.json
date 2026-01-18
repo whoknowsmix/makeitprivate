@@ -5,11 +5,11 @@
       "points": 0,
       "referralCode": "8L7F7Q",
       "invites": [],
-      "transactions": 0,
-      "volume": 0,
-      "dailyVolume": 0,
-      "weeklyVolume": 0,
-      "lastTxTimestamp": 0,
+      "transactions": 6,
+      "volume": 0.0623,
+      "dailyVolume": 0.0623,
+      "weeklyVolume": 0.0623,
+      "lastTxTimestamp": 1768736111499,
       "quests": {
         "dailyTx": false,
         "dailyVol1": false,
@@ -22,7 +22,14 @@
       "referralPoints": 0,
       "referredBy": null,
       "completedQuestsCount": 0,
-      "processedHashes": []
+      "processedHashes": [
+        "0x37f6ac71a4ff1bdde794b0e7aed1a3716d3dcc2323ced1682eccf208eee584ea",
+        "0x5c582e06d719d71363b26f42b2955282b4f19a79cafbb90a85c55b1aaadd538f",
+        "0x901c9b30e92925708780111f948cf4c3bfcdeae8c19a138ed089e87db117e00f",
+        "0x0d24ccf15cd292f15fa5b3d674fd042dcb4cdfdd5d5b45ca5b368b8d46fc0a0d",
+        "0x18d150f9d2140b863b662374eddff222686f496005680c617cd3f4e95deae709",
+        "0x7043ce5b964a740be0e41459d9f722d37b21c36a4479355e8967c09552840b38"
+      ]
     },
     "0xb5b4b2607ddfa58666ec46355f748c3d8faa41e2": {
       "address": "0xb5b4b2607ddfa58666ec46355f748c3d8faa41e2",
@@ -50,5 +57,11 @@
     }
   },
   "referrals": {},
-  "antiSybil": {}
+  "antiSybil": {
+    "0x316502403e401d5d9bc653e6fdb365caff6f7d54": {
+      "fingerprint": "b1sanh",
+      "ipAddress": "::1",
+      "firstSeenAt": 1768700920204
+    }
+  }
 }
