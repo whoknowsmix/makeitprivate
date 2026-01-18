@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
 import { Space_Grotesk } from 'next/font/google';
 import './globals.css';
+import nextDynamic from 'next/dynamic';
 import { Providers } from './providers';
 import { Sidebar } from '@/components/Sidebar';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { AppLayout } from '@/components/AppLayout';
-import { FloatingBackground } from '@/components/FloatingBackground';
+
+import { FloatingBackgroundWrapper } from '@/components/FloatingBackgroundWrapper';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -34,7 +36,7 @@ export default function RootLayout({
       <body className={`${spaceGrotesk.variable} antialiased bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30 min-h-screen relative overflow-hidden`}>
         <Providers>
           {/* Background Assets */}
-          <FloatingBackground />
+          <FloatingBackgroundWrapper />
 
           <div className="relative h-screen w-full overflow-hidden">
             <AppLayout>

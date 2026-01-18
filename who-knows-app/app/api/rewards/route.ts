@@ -69,11 +69,19 @@ export async function GET(req: NextRequest) {
     });
 }
 
+import { verifyTransaction } from '@/lib/verifyTransaction';
+
 export async function POST(req: NextRequest) {
     const { address, amount, hash, referralCode, fingerprint } = await req.json();
 
     if (!address || !amount || !hash) {
         return NextResponse.json({ error: 'Missing data' }, { status: 400 });
+    }
+
+    // Server-side Verification
+    const verification = await verifyTransaction(hash, amount, address);
+    if (!verification.verified) {
+        return NextResponse.json({ error: 'Transaction verification failed' }, { status: 400 });
     }
 
     const db = readDB();

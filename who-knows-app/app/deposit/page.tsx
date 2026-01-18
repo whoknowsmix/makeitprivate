@@ -4,9 +4,13 @@ import React, { useState, Suspense } from 'react';
 import { useAccount } from 'wagmi';
 import { generateSecret, hashSecret } from '@/lib/crypto';
 import { useDeposit, PRESETS, MIN_DEPOSIT } from '@/hooks/useSmartContract';
-import { Modal } from '@/components/Modal';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useSearchParams } from 'next/navigation';
+import dynamic from 'next/dynamic';
+
+const Modal = dynamic(() => import('@/components/Modal').then(mod => mod.Modal), {
+    ssr: false,
+});
 
 function DepositPageContent() {
     // Ethereum hooks
