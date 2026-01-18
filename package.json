@@ -4,6 +4,7 @@
   "description": "Who Knows? Privacy Mixer - Smart Contracts",
   "scripts": {
     "compile": "hardhat compile",
+    "dev": "npm run dev --prefix who-knows-app",
     "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia",
     "deploy:local": "hardhat run scripts/deploy.js --network localhost",
     "verify": "hardhat verify --network sepolia"
@@ -21,6 +22,7 @@
     "@types/chai": "^4.2.0",
     "@types/mocha": ">=9.1.0",
     "@types/node": ">=18.0.0",
+    "baseline-browser-mapping": "^2.9.15",
     "chai": "^4.2.0",
     "ethers": "^6.4.0",
     "hardhat": "^2.22.0",

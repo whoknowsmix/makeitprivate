@@ -15,8 +15,11 @@ interface HistoryModalProps {
     onClose: () => void;
 }
 
+import { useAccount } from 'wagmi';
+
 export function HistoryModal({ isOpen, onClose }: HistoryModalProps) {
     const [history, setHistory] = useState<HistoryItem[]>([]);
+    const { chain } = useAccount();
 
     useEffect(() => {
         if (isOpen) {
@@ -28,6 +31,11 @@ export function HistoryModal({ isOpen, onClose }: HistoryModalProps) {
     const clearHistory = () => {
         localStorage.removeItem('who-knows-history');
         setHistory([]);
+    };
+
+    const getExplorerUrl = (hash: string) => {
+        const baseUrl = chain?.blockExplorers?.default.url || 'https://megaeth-testnet-v2.blockscout.com';
+        return `${baseUrl}/tx/${hash}`;
     };
 
     return (
@@ -46,9 +54,19 @@ export function HistoryModal({ isOpen, onClose }: HistoryModalProps) {
                                     {new Date(item.timestamp).toLocaleString()}
                                 </span>
                             </div>
-                            <p className="text-[10px] font-mono text-white/60 break-all">
-                                {item.hash}
-                            </p>
+                            <div className="flex items-center justify-between gap-2">
+                                <p className="text-[10px] font-mono text-white/60 truncate max-w-[200px]">
+                                    {item.hash}
+                                </p>
+                                <a
+                                    href={getExplorerUrl(item.hash)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-[10px] text-primary hover:text-primary/80 flex items-center gap-1 hover:underline"
+                                >
+                                    Explorer <span className="material-symbols-outlined text-[10px]">open_in_new</span>
+                                </a>
+                            </div>
                             <span className="text-[10px] text-primary self-end">Confirmed</span>
                         </div>
                     ))

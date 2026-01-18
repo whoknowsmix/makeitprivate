@@ -15,6 +15,12 @@ typechain/
 coverage/
 coverage.json
 
+# --- SOLANA / ANCHOR ---
+target/
+.anchor/
+deploy-keypair.json
+deploy-keypair-temp.txt
+
 # --- ENVIRONMENT (NEVER COMMIT) ---
 .env
 .env.local

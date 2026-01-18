@@ -19,18 +19,17 @@ const queryClient = new QueryClient();
 export function Providers({ children }: { children: React.ReactNode }) {
     const [mounted, setMounted] = useState(false);
 
+    // Suppress Lit Dev Mode Warning
+    if (typeof window !== 'undefined') {
+        (window as any).litIssuedWarnings = new Set(['Lit is in dev mode. Not recommended for production!']);
+    }
+
     useEffect(() => {
         setMounted(true);
     }, []);
 
     // Prevent hydration mismatch - wait for client mount
-    if (!mounted) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-black">
-                <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            </div>
-        );
-    }
+    if (!mounted) return null;
 
     return (
         <QueryClientProvider client={queryClient}>

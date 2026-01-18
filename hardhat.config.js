@@ -33,6 +33,11 @@ module.exports = {
             accounts: accounts,
             gasPrice: 1000000000, // 1 gwei (ensure it doesn't get stuck)
         },
+        megaethTestnet: {
+            url: process.env.MEGAETH_RPC_URL || "https://carrot.megaeth.com/rpc",
+            accounts: accounts,
+            chainId: 6343,
+        },
     },
     etherscan: {
         apiKey: {

@@ -12,7 +12,7 @@ import "@openzeppelin/contracts/utils/Pausable.sol";
  */
 contract WhoKnows is ReentrancyGuard, Ownable, Pausable {
     uint256 public constant FEE_PERCENT = 5;
-    uint256 public constant FEE_DENOMINATOR = 100;
+    uint256 public constant FEE_DENOMINATOR = 1000;
     uint256 public constant MIN_DEPOSIT = 0.01 ether;
 
     address public feeRecipient;

@@ -3,7 +3,12 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { HistoryModal } from './HistoryModal';
+import dynamic from 'next/dynamic';
+
+const HistoryModal = dynamic(() => import('./HistoryModal').then(mod => mod.HistoryModal), {
+    ssr: false,
+    loading: () => null
+});
 
 interface SidebarProps {
     isOpen: boolean;

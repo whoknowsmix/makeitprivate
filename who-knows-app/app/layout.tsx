@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   description: 'Web3 Privacy App',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default function RootLayout({
   children,
 }: {
