@@ -4,11 +4,15 @@ import React, { useState } from 'react';
 import { useAccount } from 'wagmi';
 import { useWithdraw } from '@/hooks/useSmartContract';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { hyperEVM } from '@/lib/chains';
 
 export default function WithdrawPage() {
     // Ethereum hooks
-    const { isConnected } = useAccount();
+    const { isConnected, chain } = useAccount();
     const { withdraw: ethWithdraw, isPending, isSuccess, error, reset, hash } = useWithdraw();
+
+    // Get native currency symbol based on chain
+    const nativeSymbol = chain?.id === hyperEVM.id ? 'HYPE' : 'ETH';
 
     const [secret, setSecret] = useState('');
     const [recipient, setRecipient] = useState('');
@@ -25,7 +29,8 @@ export default function WithdrawPage() {
     // Get appropriate explorer URL
     const getExplorerUrl = () => {
         if (!hash) return '';
-        return `https://sepolia.etherscan.io/tx/${hash}`;
+        const baseUrl = chain?.blockExplorers?.default.url || 'https://sepolia.etherscan.io';
+        return `${baseUrl}/tx/${hash}`;
     };
 
     if (isSuccess) {
@@ -42,7 +47,7 @@ export default function WithdrawPage() {
                             rel="noopener noreferrer"
                             className="text-xs text-blue-400 hover:text-blue-300 break-all mb-6 block"
                         >
-                            View on Etherscan: {hash.slice(0, 20)}...
+                            View on Explorer: {hash.slice(0, 20)}...
                         </a>
                     )}
                     <button onClick={reset} className="px-8 py-3 bg-primary rounded-lg font-bold">Withdraw Again</button>
@@ -126,7 +131,7 @@ export default function WithdrawPage() {
                                 }}
                                 className="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 bg-gradient-to-r from-primary to-primary/80 border border-white/20 text-white text-base font-bold tracking-widest silver-glow transition-all active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
                             >
-                                <span className="truncate uppercase px-4">Claim Mixed ETH</span>
+                                <span className="truncate uppercase px-4">Claim Mixed {nativeSymbol}</span>
                             </button>
                         )}
                     </div>

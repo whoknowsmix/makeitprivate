@@ -26,4 +26,29 @@ export const megaethTestnet = defineChain({
     iconBackground: '#fff',
 });
 
-export const chains = [sepolia, baseSepolia, megaethTestnet] as const;
+export const hyperEVM = defineChain({
+    id: 998,
+    name: 'HyperEVM Testnet',
+    network: 'hyperevm-testnet',
+    nativeCurrency: {
+        decimals: 18,
+        name: 'HYPE',
+        symbol: 'HYPE',
+    },
+    rpcUrls: {
+        default: {
+            http: ['https://rpc.hyperliquid-testnet.xyz/evm']
+        },
+        public: {
+            http: ['https://rpc.hyperliquid-testnet.xyz/evm']
+        },
+    },
+    blockExplorers: {
+        default: { name: 'Purrsec', url: 'https://testnet.purrsec.com' },
+    },
+    testnet: true,
+    iconUrl: '/hyperevm-logo.png',
+    iconBackground: '#0A0E14',
+});
+
+export const chains = [sepolia, baseSepolia, megaethTestnet, hyperEVM] as const;

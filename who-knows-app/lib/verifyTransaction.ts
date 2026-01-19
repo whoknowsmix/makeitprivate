@@ -1,6 +1,6 @@
 import { createPublicClient, http, Hash } from 'viem';
 import { sepolia, baseSepolia } from 'viem/chains';
-import { megaethTestnet } from './chains';
+import { megaethTestnet, hyperEVM } from './chains';
 
 // Create clients for each supported chain
 const clients = {
@@ -15,6 +15,10 @@ const clients = {
     [megaethTestnet.id]: createPublicClient({
         chain: megaethTestnet,
         transport: http(process.env.NEXT_PUBLIC_MEGAETH_RPC_URL || 'https://carrot.megaeth.com/rpc')
+    }),
+    [hyperEVM.id]: createPublicClient({
+        chain: hyperEVM,
+        transport: http('https://rpc.hyperliquid-testnet.xyz/evm')
     })
 };
 

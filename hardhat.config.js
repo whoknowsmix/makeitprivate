@@ -38,6 +38,11 @@ module.exports = {
             accounts: accounts,
             chainId: 6343,
         },
+        hyperEVM: {
+            url: "https://rpc.hyperliquid-testnet.xyz/evm",
+            accounts: accounts,
+            chainId: 998,
+        },
     },
     etherscan: {
         apiKey: {

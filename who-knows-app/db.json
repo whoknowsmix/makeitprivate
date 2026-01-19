@@ -5,11 +5,11 @@
       "points": 0,
       "referralCode": "8L7F7Q",
       "invites": [],
-      "transactions": 7,
-      "volume": 0.0723,
-      "dailyVolume": 0.0723,
-      "weeklyVolume": 0.0723,
-      "lastTxTimestamp": 1768741264173,
+      "transactions": 8,
+      "volume": 0.1723,
+      "dailyVolume": 0.1723,
+      "weeklyVolume": 0.1723,
+      "lastTxTimestamp": 1768798015035,
       "quests": {
         "dailyTx": false,
         "dailyVol1": false,
@@ -29,7 +29,8 @@
         "0x0d24ccf15cd292f15fa5b3d674fd042dcb4cdfdd5d5b45ca5b368b8d46fc0a0d",
         "0x18d150f9d2140b863b662374eddff222686f496005680c617cd3f4e95deae709",
         "0x7043ce5b964a740be0e41459d9f722d37b21c36a4479355e8967c09552840b38",
-        "0xa355cada322cffc9c34c05a199b58b1caa089e8d836a734bda42c1d88a1991b3"
+        "0xa355cada322cffc9c34c05a199b58b1caa089e8d836a734bda42c1d88a1991b3",
+        "0x487afbcc14198fe0ce7b48087f38df33a33ea824401314a09e9e1808f4c734fa"
       ]
     },
     "0xb5b4b2607ddfa58666ec46355f748c3d8faa41e2": {

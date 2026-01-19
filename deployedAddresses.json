@@ -1,4 +1,9 @@
 {
+  "998": {
+    "address": "0x34C1c2F461C3AD4a85D2ABeA761c6d29F91062a5",
+    "network": "hyperEVM",
+    "timestamp": "2026-01-19T04:17:44.659Z"
+  },
   "84532": {
     "address": "0xF6C54a306B37b8BDa5d0dd4AC0511f1D19E8eec1",
     "network": "baseSepolia",
